@@ -10,8 +10,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![Last-changedate](https://img.shields.io/badge/last%20change-2023--12--27-yellowgreen.svg)](https://github.com/YuhangTom/wireShiny/commits/main)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/wireShiny.png)](https://CRAN.R-project.org/package=wireShiny)
-<!-- [![Codecov test coverage](https://codecov.io/gh/YuhangTom/wireShiny/branch/main/graph/badge.svg)](https://app.codecov.io/gh/YuhangTom/wireShiny?branch=main) -->
 [![R-CMD-check](https://github.com/YuhangTom/wireShiny/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/YuhangTom/wireShiny/actions/workflows/R-CMD-check.yaml)
+<!-- !!!Add with use_github_action!!! [![Codecov test coverage](https://codecov.io/gh/YuhangTom/wireShiny/branch/main/graph/badge.svg)](https://app.codecov.io/gh/YuhangTom/wireShiny?branch=main) -->
 <!-- badges: end -->
 
 The goal of wireShiny is to …
