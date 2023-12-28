@@ -4,6 +4,8 @@
 # wireShiny
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/YuhangTom/wireShiny/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/YuhangTom/wireShiny/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of wireShiny is to …
