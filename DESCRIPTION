@@ -17,5 +17,6 @@ Suggests:
     spelling
 Language: en-US
 Imports: 
-    magrittr
+    magrittr,
+    shiny
 BugReports: https://github.com/YuhangTom/wireShiny/issues
