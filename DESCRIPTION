@@ -1,5 +1,5 @@
 Package: wireShiny
-Title: Run the Shiny App Based on Functionalities of `wire`.
+Title: Run the Shiny App Based on Functionalities of `wire`
 Version: 0.0.0.9000
 Authors@R: c(
     person("Yuhang", "Lin", , "yhlin@iastate.edu", role = c("aut", "cre"),
