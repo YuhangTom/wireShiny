@@ -21,7 +21,7 @@ authors:
   email: hofmann@iastate.edu
   orcid: https://orcid.org/0000-0001-6216-5183
 repository-code: https://github.com/YuhangTom/wireShiny
-url: https://github.com/YuhangTom/wireShiny
+url: https://yuhangtom.github.io/wireShiny/
 contact:
 - family-names: Lin
   given-names: Yuhang
@@ -56,4 +56,42 @@ references:
   - family-names: Wickham
     given-names: Hadley
     email: hadley@rstudio.com
+  year: '2023'
+- type: software
+  title: shiny
+  abstract: 'shiny: Web Application Framework for R'
+  notes: Imports
+  url: https://shiny.posit.co/
+  repository: https://CRAN.R-project.org/package=shiny
+  authors:
+  - family-names: Chang
+    given-names: Winston
+    email: winston@posit.co
+    orcid: https://orcid.org/0000-0002-1576-2126
+  - family-names: Cheng
+    given-names: Joe
+    email: joe@posit.co
+  - family-names: Allaire
+    given-names: JJ
+    email: jj@posit.co
+  - family-names: Sievert
+    given-names: Carson
+    email: carson@posit.co
+    orcid: https://orcid.org/0000-0002-4958-2844
+  - family-names: Schloerke
+    given-names: Barret
+    email: barret@posit.co
+    orcid: https://orcid.org/0000-0001-9986-114X
+  - family-names: Xie
+    given-names: Yihui
+    email: yihui@posit.co
+  - family-names: Allen
+    given-names: Jeff
+  - family-names: McPherson
+    given-names: Jonathan
+    email: jonathan@posit.co
+  - family-names: Dipert
+    given-names: Alan
+  - family-names: Borges
+    given-names: Barbara
   year: '2023'
