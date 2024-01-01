@@ -39,6 +39,12 @@ server <- function(input, output) {
     ext1 <- tools::file_ext(inFile1$datapath)
 
     if (ext1 == "x3p") {
+      shinyjs::show("secondFileInput")  # Show the second file input if the first file is a x3p file
+    } else {
+      shinyjs::hide("secondFileInput")  # Hide the second file input otherwise
+    }
+
+    if (ext1 == "x3p") {
       x3p1 <- x3ptools::x3p_read(inFile1$datapath)
       assert_that("x3p" %in% class(x3p1), msg = "The first uploaded file is not a valid x3p file.")
     } else if (ext1 == "rda") {
