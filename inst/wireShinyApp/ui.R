@@ -1,24 +1,20 @@
 library(shiny)
 
 ui <- fluidPage(
-  shinyjs::useShinyjs(),
+  shinyjs::useShinyjs(),  # Set up shinyjs
 
-  ### App title
   titlePanel("R Shiny App for wire"),
 
-  ### Sidebar layout with input and output definitions
   sidebarLayout(
-    ### Sidebar panel for inputs
     sidebarPanel(
-      ### Input file
-      fileInput("fileInput",
-        "Choose x3p files",
-        multiple = FALSE,
-        accept = c(".x3p", ".rda")
+      fileInput("fileInput1", "Choose file (Max size: 5MB, Acceptable formats: .x3p, .rda)", accept = c(".x3p", ".rda")),
+      shinyjs::hidden(  # Hide the second file input initially
+        div(id = "secondFileInput",  # Add an id to the div so it can be referenced
+          fileInput("fileInput2", "Choose file (Max size: 5MB, Acceptable format: .x3p)", accept = c(".x3p"))
+        )
       )
     ),
 
-    ### Main panel for displaying outputs
     mainPanel(
       verbatimTextOutput("strOutput")
     )
