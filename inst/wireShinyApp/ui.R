@@ -1,30 +1,26 @@
-# Define UI for app that draws a histogram ----
+library(shiny)
+
 ui <- fluidPage(
+  shinyjs::useShinyjs(),
 
-  # App title ----
-  titlePanel("Hello Shiny!"),
+  ### App title
+  titlePanel("R Shiny App for wire"),
 
-  # Sidebar layout with input and output definitions ----
+  ### Sidebar layout with input and output definitions
   sidebarLayout(
-
-    # Sidebar panel for inputs ----
+    ### Sidebar panel for inputs
     sidebarPanel(
-
-      # Input: Slider for the number of bins ----
-      sliderInput(inputId = "bins",
-                  label = "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
-
+      ### Input file
+      fileInput("fileInput",
+        "Choose x3p files",
+        multiple = FALSE,
+        accept = c(".x3p", ".rda")
+      )
     ),
 
-    # Main panel for displaying outputs ----
+    ### Main panel for displaying outputs
     mainPanel(
-
-      # Output: Histogram ----
-      plotOutput(outputId = "distPlot")
-
+      verbatimTextOutput("strOutput")
     )
   )
 )
