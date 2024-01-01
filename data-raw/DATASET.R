@@ -15,3 +15,14 @@ x3p_subsamples <- map(dir, x3ptools::x3p_read) %>%
   set_names(x3p_names)
 
 usethis::use_data(x3p_subsamples, overwrite = TRUE)
+
+dir.create("./inst/wireShinyApp/testDat", showWarnings = FALSE)
+file.remove(list.files("./inst/wireShinyApp/testDat", full.names = TRUE))
+
+x3p_subsamples %>%
+  iwalk(
+    function(x, i){
+      x3ptools::x3p_write(x, file = paste0("./inst/wireShinyApp/testDat/", i, ".x3p"))
+    })
+
+save(x3p_subsamples, file = "./inst/wireShinyApp/testDat/x3p_subsamples.rda")
