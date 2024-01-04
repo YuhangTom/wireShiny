@@ -41,16 +41,20 @@ server <- function(input, output) {
 
     ext1 <- tools::file_ext(inFile1$datapath)
 
-    if (ext1 == "x3p") {
-      show("secondFileInput") # Show the second file input if the first file is a x3p file
-    } else {
-      hide("secondFileInput") # Hide the second file input otherwise
+    if (!(ext1 %in% c("x3p", "rda"))){
+      showNotification("Incorrect input format for the first file. Please upload a x3p or rda file.", type = "error")
+      return(NULL)
     }
 
     if (ext1 == "x3p") {
+      show("secondFileInput") # Show the second file input if the first file is a x3p file
+
       x3p1 <- x3p_read(inFile1$datapath)
       assert_that("x3p" %in% class(x3p1), msg = "The first uploaded file is not a valid x3p file.")
+      x3p2 <- NULL
     } else if (ext1 == "rda") {
+      hide("secondFileInput") # Hide the second file input otherwise
+
       x3pList <- get(load(inFile1$datapath))
       if (!is.list(x3pList) || length(x3pList) < 2 || !all(sapply(x3pList, function(x) "x3p" %in% class(x)))) {
         showNotification("The first uploaded file is not a valid rda file containing at least 2 x3p objects.", type = "error")
@@ -61,12 +65,10 @@ server <- function(input, output) {
       }
       x3p1 <- x3pList[1]
       x3p2 <- x3pList[2]
-    } else {
-      showNotification("Incorrect input format for the first file. Please upload a x3p or rda file.", type = "error")
-      return(NULL)
     }
 
     rv$x3p1 <- x3p1
+    rv$x3p2 <- x3p2
   })
 
   observeEvent(input$fileInput2, {
