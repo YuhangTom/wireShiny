@@ -14,5 +14,5 @@ run_wireShiny <- function() {
     stop("Could not find the Shiny app directory. Try re-installing `wireShiny`.", call. = FALSE)
   }
 
-  shiny::runApp(appDir, display.mode = "normal")
+  runApp(appDir, display.mode = "normal")
 }
