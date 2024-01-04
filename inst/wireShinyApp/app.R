@@ -10,6 +10,17 @@ ui <- fluidPage(
   titlePanel("R Shiny App for wire"),
   sidebarLayout(
     sidebarPanel(
+      tags$head(
+        tags$style(HTML("
+        input[type=number] {
+              -moz-appearance:textfield;
+        }
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+        }
+    "))),
       titlePanel("File inputs"),
       fileInput("fileInput1", "Choose file (Max size: 5MB, Acceptable formats: .x3p, .rda)", accept = c(".x3p", ".rda")),
       hidden(
