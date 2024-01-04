@@ -50,4 +50,4 @@ rsconnect/
 .Rproj.user
 
 # Ignore wireShinyApp test data
-/inst/wireShinyApp/testDat/
+# /inst/wireShinyApp/testDat/
