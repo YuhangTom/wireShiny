@@ -5,19 +5,19 @@ library(tools) # file_ext
 
 
 ui <- fluidPage(
-  useShinyjs(), # Set up shinyjs
+  useShinyjs(),
 
   titlePanel("R Shiny App for wire"),
   sidebarLayout(
     sidebarPanel(
       fileInput("fileInput1", "Choose file (Max size: 5MB, Acceptable formats: .x3p, .rda)", accept = c(".x3p", ".rda")),
-      hidden( # Hide the second file input initially
+      hidden(
         div(
-          id = "secondFileInput", # Add an id to the div so it can be referenced
+          id = "secondFileInput",
           fileInput("fileInput2", "Choose file (Max size: 5MB, Acceptable format: .x3p)", accept = c(".x3p"))
         )
       ),
-      actionButton("clear", "Clear files") # Add a button to clear the file inputs
+      actionButton("clear", "Clear files")
     ),
     mainPanel(
       verbatimTextOutput("strOutput")
