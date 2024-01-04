@@ -7,7 +7,6 @@ library(purrr) # map_lgl
 
 ui <- fluidPage(
   useShinyjs(),
-
   titlePanel("R Shiny App for wire"),
   sidebarLayout(
     sidebarPanel(
@@ -47,11 +46,15 @@ server <- function(input, output) {
 
       x3prda <- get(load(inFile1$datapath))
       if (!is.list(x3prda) || length(x3prda) < 2 || !all(map_lgl(x3prda, ~ "x3p" %in% class(.)))) {
-        showNotification("The first uploaded file is not a valid rda file containing at least 2 x3p objects.", type = "error")
+        showNotification("The uploaded file is not a valid rda file containing at least 2 x3p objects.",
+          type = "error"
+        )
         return(NULL)
       }
       if (length(x3prda) > 2) {
-        message("More than 2 x3p objects detected in the first file. Only the first 2 x3p objects will be used.")
+        showNotification("More than two x3p objects detected in the uploaded file. Only the first two will be used.",
+          type = "warning"
+        )
       }
       x3p1 <- x3prda[1]
       x3p2 <- x3prda[2]
