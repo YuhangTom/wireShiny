@@ -20,7 +20,8 @@ ui <- fluidPage(
               -webkit-appearance: none;
               margin: 0;
         }
-    "))),
+    "))
+      ),
       titlePanel("File inputs"),
       fileInput("fileInput1", "Choose file (Max size: 5MB, Acceptable formats: .x3p, .rda)", accept = c(".x3p", ".rda")),
       hidden(
@@ -30,10 +31,13 @@ ui <- fluidPage(
         )
       ),
       actionButton("clear", "Clear files"),
-      titlePanel("Inner polygon parameters"),
-      textInput("mask_col", "Mask color", value = "", placeholder = "Enter a color string"),
-      numericInput("concavity", "Concavity (positive number)", value = 1.5, min = 1e-12),
-      numericInput("b", "Block size b (positive integer)", value = 1, min = 1, step = 1)
+      conditionalPanel(
+        condition = "output.strOutput !== ''",
+        titlePanel("Inner polygon parameters"),
+        textInput("mask_col", "Mask color", value = "", placeholder = "Enter a color string"),
+        numericInput("concavity", "Concavity (positive number)", value = 1.5, min = 1e-12),
+        numericInput("b", "Block size b (positive integer)", value = 1, min = 1, step = 1)
+      )
     ),
     mainPanel(
       verbatimTextOutput("strOutput")
