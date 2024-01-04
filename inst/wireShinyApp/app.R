@@ -1,8 +1,9 @@
 library(shiny)
 library(shinyjs)
+library(shinyWidgets) # showNotification
 library(x3ptools)
 library(tools) # file_ext
-
+library(purrr) # map_lgl
 
 ui <- fluidPage(
   useShinyjs(),
