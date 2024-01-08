@@ -34,7 +34,6 @@ ui <- fluidPage(
       conditionalPanel(
         condition = "output.strOutput !== ''",
         titlePanel("Inner polygon parameters"),
-        textInput("mask_col", "Mask color", value = "", placeholder = "Enter a color string"),
         numericInput("concavity", "Concavity (positive number)", value = 1.5, min = 1e-12),
         numericInput("b", "Block size b (positive integer)", value = 1, min = 1, step = 1)
       )
