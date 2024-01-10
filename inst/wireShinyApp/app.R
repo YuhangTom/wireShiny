@@ -35,7 +35,12 @@ ui <- fluidPage(
         condition = "output.strOutput !== ''",
         titlePanel("Inner polygon parameters"),
         numericInput("concavity", "Concavity (positive number)", value = 1.5, min = 1e-12),
-        numericInput("b", "Block size b (positive integer)", value = 1, min = 1, step = 1)
+        numericInput("b", "Block size b (positive integer)", value = 1, min = 1, step = 1),
+        titlePanel("Rotation parameters"),
+        numericInput("red_cutoff", "Red cutoff", value = 0.3, min = 0, max = 1),
+        numericInput("blue_cutoff", "Blue cutoff", value = 0.7, min = 0, max = 1),
+        numericInput("min_score_cut", "Min score cut", value = 0.1, min = 0),
+        numericInput("loess_span", "Loess span", value = 0.2, min = 0)
       )
     ),
     mainPanel(
