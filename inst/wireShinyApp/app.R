@@ -43,7 +43,8 @@ ui <- fluidPage(
         numericInput("loess_span", "Loess span", value = 0.2, min = 0),
         titlePanel("Shifting parameters"),
         numericInput("delta_lower", "Delta lower", value = -5, min = -Inf, max = -1, step = 1),
-        numericInput("delta_upper", "Delta upper", value = 5, min = 1, max = Inf, step = 1)
+        numericInput("delta_upper", "Delta upper", value = 5, min = 1, max = Inf, step = 1),
+        actionButton("run_button", "Run")
       )
     ),
     mainPanel(
