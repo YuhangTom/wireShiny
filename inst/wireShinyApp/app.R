@@ -1,9 +1,11 @@
 library(shiny)
 library(shinyjs)
 library(shinyWidgets) # showNotification
+
+library(tidyverse)
+
 library(x3ptools)
-library(tools) # file_ext
-library(purrr) # map_lgl
+library(wire)
 
 ui <- fluidPage(
   useShinyjs(),
@@ -62,7 +64,7 @@ server <- function(input, output) {
   observeEvent(input$fileInput1, {
     inFile1 <- input$fileInput1
 
-    ext1 <- file_ext(inFile1$datapath)
+    ext1 <- tools::file_ext(inFile1$datapath)
 
     if (ext1 == "x3p") {
       show("secondFileInput")
@@ -165,8 +167,30 @@ server <- function(input, output) {
       delta_upper <- input$delta_upper
     }
 
-    # Placeholder for the code to run
-    print(delta_upper)
+    shift_sigs <- map(list(x3ps$x3p1[[1]], x3ps$x3p2[[1]]), function(x3p) {
+      insidepoly_df <- x3p_insidepoly_df(x3p, concavity = concavity, b = b)
+      x3p_inner_nomiss_res <- df_rmtrend_x3p(insidepoly_df)
+      x3p_inner_impute <- x3p_impute(x3p_inner_nomiss_res)
+      x3p_bin_rotate <- x3p_vertical(x3p_inner_impute,
+        freqs = c(0, red_cutoff, blue_cutoff, 1),
+        min_score_cut = min_score_cut,
+        loess_span = loess_span
+      )
+      x3p_shift_sig_vec(x3p_bin_rotate, delta = delta_lower:delta_upper)
+    })
+
+    aligned <- bulletxtrctr::sig_align(shift_sigs[[1]]$sig, shift_sigs[[2]]$sig)
+
+    p_x3p_signals <- aligned$lands %>%
+      pivot_longer(sig1:sig2, names_to = "x3p", names_prefix = "sig") %>%
+      ggplot(aes(x = x, y = value)) +
+      geom_line(aes(colour = x3p)) +
+      theme_bw() +
+      scale_colour_brewer(palette = "Paired") +
+      xlab("x") +
+      ylab("signal value")
+
+    print(p_x3p_signals)
   })
 }
 
