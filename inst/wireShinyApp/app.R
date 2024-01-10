@@ -114,6 +114,36 @@ server <- function(input, output) {
       str(x3ps$x3p2)
     }
   })
+
+  observeEvent(input$run_button, {
+    if (is.na(input$concavity)) {
+      showNotification("Concavity must be provided.", type = "warning")
+    }
+    if (is.na(input$b)) {
+      showNotification("Block size b must be provided.", type = "warning")
+    }
+    if (is.na(input$red_cutoff)) {
+      showNotification("Red cutoff must be provided.", type = "warning")
+    }
+    if (is.na(input$blue_cutoff)) {
+      showNotification("Blue cutoff must be provided.", type = "warning")
+    }
+    if (is.na(input$min_score_cut)) {
+      showNotification("Min score cut must be provided.", type = "warning")
+    }
+    if (is.na(input$loess_span)) {
+      showNotification("Loess span must be provided.", type = "warning")
+    }
+    if (is.na(input$delta_lower)) {
+      showNotification("Delta lower must be provided.", type = "warning")
+    }
+    if (is.na(input$delta_upper)) {
+      showNotification("Delta upper must be provided.", type = "warning")
+    }
+
+    # Placeholder for the code to run
+    print(input$delta_upper)
+  })
 }
 
 shinyApp(ui = ui, server = server)
