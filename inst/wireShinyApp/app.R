@@ -117,32 +117,56 @@ server <- function(input, output) {
 
   observeEvent(input$run_button, {
     if (is.na(input$concavity)) {
-      showNotification("Concavity must be provided.", type = "warning")
+      showNotification("Concavity not provided, using default value 1.5.", type = "warning")
+      concavity <- 1.5
+    } else {
+      concavity <- input$concavity
     }
     if (is.na(input$b)) {
-      showNotification("Block size b must be provided.", type = "warning")
+      showNotification("Block size b not provided, using default value 1.", type = "warning")
+      b <- 1
+    } else {
+      b <- input$b
     }
     if (is.na(input$red_cutoff)) {
-      showNotification("Red cutoff must be provided.", type = "warning")
+      showNotification("Red cutoff not provided, using default value 0.3.", type = "warning")
+      red_cutoff <- 0.3
+    } else {
+      red_cutoff <- input$red_cutoff
     }
     if (is.na(input$blue_cutoff)) {
-      showNotification("Blue cutoff must be provided.", type = "warning")
+      showNotification("Blue cutoff not provided, using default value 0.7.", type = "warning")
+      blue_cutoff <- 0.7
+    } else {
+      blue_cutoff <- input$blue_cutoff
     }
     if (is.na(input$min_score_cut)) {
-      showNotification("Min score cut must be provided.", type = "warning")
+      showNotification("Min score cut not provided, using default value 0.1.", type = "warning")
+      min_score_cut <- 0.1
+    } else {
+      min_score_cut <- input$min_score_cut
     }
     if (is.na(input$loess_span)) {
-      showNotification("Loess span must be provided.", type = "warning")
+      showNotification("Loess span not provided, using default value 0.2.", type = "warning")
+      loess_span <- 0.2
+    } else {
+      loess_span <- input$loess_span
     }
     if (is.na(input$delta_lower)) {
-      showNotification("Delta lower must be provided.", type = "warning")
+      showNotification("Delta lower not provided, using default value -5.", type = "warning")
+      delta_lower <- -5
+    } else {
+      delta_lower <- input$delta_lower
     }
     if (is.na(input$delta_upper)) {
-      showNotification("Delta upper must be provided.", type = "warning")
+      showNotification("Delta upper not provided, using default value 5.", type = "warning")
+      delta_upper <- 5
+    } else {
+      delta_upper <- input$delta_upper
     }
 
     # Placeholder for the code to run
-    print(input$delta_upper)
+    print(delta_upper)
   })
 }
 
