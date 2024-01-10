@@ -40,7 +40,10 @@ ui <- fluidPage(
         numericInput("red_cutoff", "Red cutoff", value = 0.3, min = 0, max = 1),
         numericInput("blue_cutoff", "Blue cutoff", value = 0.7, min = 0, max = 1),
         numericInput("min_score_cut", "Min score cut", value = 0.1, min = 0),
-        numericInput("loess_span", "Loess span", value = 0.2, min = 0)
+        numericInput("loess_span", "Loess span", value = 0.2, min = 0),
+        titlePanel("Shifting parameters"),
+        numericInput("delta_lower", "Delta lower", value = -5, min = -Inf, max = -1, step = 1),
+        numericInput("delta_upper", "Delta upper", value = 5, min = 1, max = Inf, step = 1)
       )
     ),
     mainPanel(
