@@ -107,6 +107,7 @@ server <- function(input, output) {
     x3ps$x3p1 <- NULL
     x3ps$x3p2 <- NULL
     hide("secondFileInput")
+    output$signals_plot <- NULL
   })
 
   output$strOutput <- renderPrint({
