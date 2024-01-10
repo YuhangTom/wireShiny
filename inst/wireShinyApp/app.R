@@ -50,7 +50,8 @@ ui <- fluidPage(
       )
     ),
     mainPanel(
-      verbatimTextOutput("strOutput")
+      verbatimTextOutput("strOutput"),
+      plotOutput("signals_plot")
     )
   )
 )
@@ -181,7 +182,7 @@ server <- function(input, output) {
 
     aligned <- bulletxtrctr::sig_align(shift_sigs[[1]]$sig, shift_sigs[[2]]$sig)
 
-    p_x3p_signals <- aligned$lands %>%
+    p_signals <- aligned$lands %>%
       pivot_longer(sig1:sig2, names_to = "x3p", names_prefix = "sig") %>%
       ggplot(aes(x = x, y = value)) +
       geom_line(aes(colour = x3p)) +
@@ -190,7 +191,9 @@ server <- function(input, output) {
       xlab("x") +
       ylab("signal value")
 
-    print(p_x3p_signals)
+    output$signals_plot <- renderPlot({
+      p_signals
+    })
   })
 }
 
