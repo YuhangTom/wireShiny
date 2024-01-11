@@ -208,7 +208,8 @@ server <- function(input, output) {
         theme_bw() +
         scale_colour_brewer(palette = "Paired") +
         xlab("x") +
-        ylab("signal value")
+        ylab("signal value") +
+        ggtitle(paste0("CCF: ", round(aligned$ccf, 4)))
 
       output$signals_plot <- renderPlot({
         p_signals
