@@ -121,74 +121,88 @@ server <- function(input, output) {
   })
 
   observeEvent(input$run_button, {
-    if (is.na(input$concavity)) {
-      showNotification("Concavity not provided, using default value 1.5.", type = "warning")
-      concavity <- 1.5
-    } else {
-      concavity <- input$concavity
-    }
-    if (is.na(input$b)) {
-      showNotification("Block size b not provided, using default value 1.", type = "warning")
-      b <- 1
-    } else {
-      b <- input$b
-    }
-    if (near(input$colour_cutoff[1], input$colour_cutoff[2])) {
-      showNotification("Colour cutoffs cannot be the same, using default value 0.3 and 0.7.", type = "warning")
-      colour_cutoff <- c(0.3, 0.7)
-    } else {
-      colour_cutoff <- input$colour_cutoff
-    }
-    if (is.na(input$min_score_cut)) {
-      showNotification("Min score cut not provided, using default value 0.1.", type = "warning")
-      min_score_cut <- 0.1
-    } else {
-      min_score_cut <- input$min_score_cut
-    }
-    if (is.na(input$loess_span)) {
-      showNotification("Loess span not provided, using default value 0.2.", type = "warning")
-      loess_span <- 0.2
-    } else {
-      loess_span <- input$loess_span
-    }
-    if (is.na(input$delta_lower)) {
-      showNotification("Delta lower not provided, using default value -5.", type = "warning")
-      delta_lower <- -5
-    } else {
-      delta_lower <- input$delta_lower
-    }
-    if (is.na(input$delta_upper)) {
-      showNotification("Delta upper not provided, using default value 5.", type = "warning")
-      delta_upper <- 5
-    } else {
-      delta_upper <- input$delta_upper
-    }
+    withProgress(message = "Processing", value = 0, {
+      incProgress(1 / 5, detail = "Step 1 of 5: Checking parameters...")
 
-    shift_sigs <- map(list(x3ps$x3p1, x3ps$x3p2), function(x3p) {
-      insidepoly_df <- x3p_insidepoly_df(x3p, concavity = concavity, b = b)
-      x3p_inner_nomiss_res <- df_rmtrend_x3p(insidepoly_df)
-      x3p_inner_impute <- x3p_impute(x3p_inner_nomiss_res)
-      x3p_bin_rotate <- x3p_vertical(x3p_inner_impute,
-        freqs = c(0, colour_cutoff, 1),
-        min_score_cut = min_score_cut,
-        loess_span = loess_span
-      )
-      x3p_shift_sig_vec(x3p_bin_rotate, delta = delta_lower:delta_upper)
-    })
+      if (is.na(input$concavity)) {
+        showNotification("Concavity not provided, using default value 1.5.", type = "warning")
+        concavity <- 1.5
+      } else {
+        concavity <- input$concavity
+      }
+      if (is.na(input$b)) {
+        showNotification("Block size b not provided, using default value 1.", type = "warning")
+        b <- 1
+      } else {
+        b <- input$b
+      }
+      if (near(input$colour_cutoff[1], input$colour_cutoff[2])) {
+        showNotification("Colour cutoffs cannot be the same, using default value 0.3 and 0.7.", type = "warning")
+        colour_cutoff <- c(0.3, 0.7)
+      } else {
+        colour_cutoff <- input$colour_cutoff
+      }
+      if (is.na(input$min_score_cut)) {
+        showNotification("Min score cut not provided, using default value 0.1.", type = "warning")
+        min_score_cut <- 0.1
+      } else {
+        min_score_cut <- input$min_score_cut
+      }
+      if (is.na(input$loess_span)) {
+        showNotification("Loess span not provided, using default value 0.2.", type = "warning")
+        loess_span <- 0.2
+      } else {
+        loess_span <- input$loess_span
+      }
+      if (is.na(input$delta_lower)) {
+        showNotification("Delta lower not provided, using default value -5.", type = "warning")
+        delta_lower <- -5
+      } else {
+        delta_lower <- input$delta_lower
+      }
+      if (is.na(input$delta_upper)) {
+        showNotification("Delta upper not provided, using default value 5.", type = "warning")
+        delta_upper <- 5
+      } else {
+        delta_upper <- input$delta_upper
+      }
 
-    aligned <- bulletxtrctr::sig_align(shift_sigs[[1]]$sig, shift_sigs[[2]]$sig)
+      incProgress(1 / 5, detail = "Step 2 of 5: Processing scans...")
 
-    p_signals <- aligned$lands %>%
-      pivot_longer(sig1:sig2, names_to = "x3p", names_prefix = "sig") %>%
-      ggplot(aes(x = x, y = value)) +
-      geom_line(aes(colour = x3p)) +
-      theme_bw() +
-      scale_colour_brewer(palette = "Paired") +
-      xlab("x") +
-      ylab("signal value")
+      shift_sigs <- map(list(x3ps$x3p1, x3ps$x3p2), function(x3p) {
+        insidepoly_df <- x3p_insidepoly_df(x3p, concavity = concavity, b = b)
+        x3p_inner_nomiss_res <- df_rmtrend_x3p(insidepoly_df)
+        x3p_inner_impute <- x3p_impute(x3p_inner_nomiss_res)
+        x3p_bin_rotate <- x3p_vertical(x3p_inner_impute,
+          freqs = c(0, colour_cutoff, 1),
+          min_score_cut = min_score_cut,
+          loess_span = loess_span
+        )
+        x3p_shift_sig_vec(x3p_bin_rotate, delta = delta_lower:delta_upper)
+      })
 
-    output$signals_plot <- renderPlot({
-      p_signals
+      incProgress(1 / 5, detail = "Step 3 of 5: Aligning signals...")
+
+      aligned <- bulletxtrctr::sig_align(shift_sigs[[1]]$sig, shift_sigs[[2]]$sig)
+
+      incProgress(1 / 5, detail = "Step 4 of 5: Plotting...")
+
+      p_signals <- aligned$lands %>%
+        pivot_longer(sig1:sig2, names_to = "x3p", names_prefix = "sig") %>%
+        ggplot(aes(x = x, y = value)) +
+        geom_line(aes(colour = x3p)) +
+        theme_bw() +
+        scale_colour_brewer(palette = "Paired") +
+        xlab("x") +
+        ylab("signal value")
+
+      output$signals_plot <- renderPlot({
+        p_signals
+      })
+
+      incProgress(1 / 5, detail = "Step 5 of 5: Complete.")
+
+      Sys.sleep(1)
     })
   })
 }
