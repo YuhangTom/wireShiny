@@ -88,8 +88,8 @@ server <- function(input, output) {
           type = "warning"
         )
       }
-      x3p1 <- x3prda[1]
-      x3p2 <- x3prda[2]
+      x3p1 <- x3prda[1][[1]]
+      x3p2 <- x3prda[2][[1]]
     }
 
     x3ps$x3p1 <- x3p1
@@ -172,7 +172,7 @@ server <- function(input, output) {
       delta_upper <- input$delta_upper
     }
 
-    shift_sigs <- map(list(x3ps$x3p1[[1]], x3ps$x3p2[[1]]), function(x3p) {
+    shift_sigs <- map(list(x3ps$x3p1, x3ps$x3p2), function(x3p) {
       insidepoly_df <- x3p_insidepoly_df(x3p, concavity = concavity, b = b)
       x3p_inner_nomiss_res <- df_rmtrend_x3p(insidepoly_df)
       x3p_inner_impute <- x3p_impute(x3p_inner_nomiss_res)
