@@ -51,7 +51,6 @@ ui <- fluidPage(
       )
     ),
     mainPanel(
-      verbatimTextOutput("strOutput"),
       plotOutput("signals_plot")
     )
   )
@@ -116,15 +115,6 @@ server <- function(input, output) {
       hide("parametersInput")
     } else {
       show("parametersInput")
-    }
-  })
-
-  output$strOutput <- renderPrint({
-    if (!is.null(x3ps$x3p1) && !is.null(x3ps$x3p2)) {
-      cat("Structure of the first x3p object:\n")
-      str(x3ps$x3p1)
-      cat("\nStructure of the second x3p object:\n")
-      str(x3ps$x3p2)
     }
   })
 
