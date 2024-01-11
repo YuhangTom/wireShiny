@@ -33,19 +33,21 @@ ui <- fluidPage(
         )
       ),
       actionButton("clear", "Clear files"),
-      conditionalPanel(
-        condition = "output.strOutput !== ''",
-        titlePanel("Inner polygon parameters"),
-        numericInput("concavity", "Concavity (positive number)", value = 1.5, min = 1e-12),
-        numericInput("b", "Block size b (positive integer)", value = 1, min = 1, step = 1),
-        titlePanel("Rotation parameters"),
-        sliderInput("colour_cutoff", "Colour cutoff", value = c(0.3, 0.7), min = 0, max = 1, step = 0.1),
-        numericInput("min_score_cut", "Min score cut (non-negative number)", value = 0.1, min = 0),
-        numericInput("loess_span", "Loess span (positive number)", value = 0.2, min = 0),
-        titlePanel("Shifting parameters"),
-        numericInput("delta_lower", "Delta lower (negative integer)", value = -5, max = -1, step = 1),
-        numericInput("delta_upper", "Delta upper (positive integer)", value = 5, min = 1, step = 1),
-        actionButton("run_button", "Run")
+      hidden(
+        div(
+          id = "parametersInput",
+          titlePanel("Inner polygon parameters"),
+          numericInput("concavity", "Concavity (positive number)", value = 1.5, min = 1e-12),
+          numericInput("b", "Block size b (positive integer)", value = 1, min = 1, step = 1),
+          titlePanel("Rotation parameters"),
+          sliderInput("colour_cutoff", "Colour cutoff", value = c(0.3, 0.7), min = 0, max = 1, step = 0.1),
+          numericInput("min_score_cut", "Min score cut (non-negative number)", value = 0.1, min = 0),
+          numericInput("loess_span", "Loess span (positive number)", value = 0.2, min = 0),
+          titlePanel("Shifting parameters"),
+          numericInput("delta_lower", "Delta lower (negative integer)", value = -5, max = -1, step = 1),
+          numericInput("delta_upper", "Delta upper (positive integer)", value = 5, min = 1, step = 1),
+          actionButton("run_button", "Run")
+        )
       )
     ),
     mainPanel(
@@ -107,6 +109,14 @@ server <- function(input, output) {
     x3ps$x3p2 <- NULL
     hide("secondFileInput")
     output$signals_plot <- NULL
+  })
+
+  observe({
+    if (is.null(x3ps$x3p2)) {
+      hide("parametersInput")
+    } else {
+      show("parametersInput")
+    }
   })
 
   output$strOutput <- renderPrint({
