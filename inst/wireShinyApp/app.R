@@ -124,7 +124,7 @@ server <- function(input, output) {
 
   observeEvent(input$run_button, {
     withProgress(message = "Processing", value = 0, {
-      n_step <- 5
+      n_step <- 10
 
       incProgress(1 / n_step,
         detail = sprintf("Step 1 of %d: Checking parameters...", n_step)
@@ -174,17 +174,29 @@ server <- function(input, output) {
       }
 
       incProgress(1 / n_step,
-        detail = sprintf("Step 2 of %d: Processing scans...", n_step)
+        detail = sprintf("Step 2 of %d: Computing summaries for scans...", n_step)
       )
 
       insidepoly_df_1 <- x3p_insidepoly_df(x3ps$x3p1, concavity = concavity, b = b)
       insidepoly_df_2 <- x3p_insidepoly_df(x3ps$x3p2, concavity = concavity, b = b)
 
+      incProgress(1 / n_step,
+        detail = sprintf("Step 3 of %d: Detrending...", n_step)
+      )
+
       x3p_inner_nomiss_res_1 <- df_rmtrend_x3p(insidepoly_df_1)
       x3p_inner_nomiss_res_2 <- df_rmtrend_x3p(insidepoly_df_2)
 
+      incProgress(1 / n_step,
+        detail = sprintf("Step 4 of %d: Imputing for missing values...", n_step)
+      )
+
       x3p_inner_impute_1 <- x3p_impute(x3p_inner_nomiss_res_1)
       x3p_inner_impute_2 <- x3p_impute(x3p_inner_nomiss_res_2)
+
+      incProgress(1 / n_step,
+        detail = sprintf("Step 5 of %d: Rotating scans...", n_step)
+      )
 
       x3p_bin_rotate_1 <- x3p_vertical(x3p_inner_impute_1,
         freqs = c(0, colour_cutoff, 1),
@@ -197,20 +209,28 @@ server <- function(input, output) {
         loess_span = loess_span
       )
 
+      incProgress(1 / n_step,
+        detail = sprintf("Step 6 of %d: Shifting scans...", n_step)
+      )
+
       x3p_bin_shift_1 <- x3p_shift(x3p_bin_rotate_1, delta = delta_lower:delta_upper)
       x3p_bin_shift_2 <- x3p_shift(x3p_bin_rotate_2, delta = delta_lower:delta_upper)
+
+      incProgress(1 / n_step,
+        detail = sprintf("Step 7 of %d: Extracting signals...", n_step)
+      )
 
       shift_sig_1 <- x3p_raw_sig_vec(x3p_bin_shift_1)
       shift_sig_2 <- x3p_raw_sig_vec(x3p_bin_shift_2)
 
       incProgress(1 / n_step,
-        detail = sprintf("Step 3 of %d: Aligning signals...", n_step)
+        detail = sprintf("Step 8 of %d: Aligning signals...", n_step)
       )
 
       aligned <- bulletxtrctr::sig_align(shift_sig_1$sig, shift_sig_2$sig)
 
       incProgress(1 / n_step,
-        detail = sprintf("Step 4 of %d: Plotting...", n_step)
+        detail = sprintf("Step 9 of %d: Plotting...", n_step)
       )
 
       p_signals <- aligned$lands %>%
@@ -229,7 +249,7 @@ server <- function(input, output) {
       })
 
       incProgress(1 / n_step,
-        detail = sprintf("Step 5 of %d: Complete.", n_step)
+        detail = sprintf("Step 10 of %d: Complete.", n_step)
       )
 
       Sys.sleep(1)
