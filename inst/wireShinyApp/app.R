@@ -3,9 +3,11 @@ library(shinyjs)
 library(shinyWidgets) # showNotification
 
 library(tidyverse)
+library(plotly)
 
 library(x3ptools)
 library(wire)
+
 
 ui <- fluidPage(
   useShinyjs(),
@@ -51,7 +53,7 @@ ui <- fluidPage(
       )
     ),
     mainPanel(
-      plotOutput("signals_plot")
+      plotlyOutput("signals_plot")
     )
   )
 )
@@ -221,8 +223,9 @@ server <- function(input, output) {
         ylab("signal value") +
         ggtitle(paste0("CCF: ", round(aligned$ccf, 4)))
 
-      output$signals_plot <- renderPlot({
-        p_signals
+      output$signals_plot <- renderPlotly({
+        p_signals %>%
+          ggplotly()
       })
 
       incProgress(1 / n_step,
