@@ -169,21 +169,35 @@ server <- function(input, output) {
 
       incProgress(1 / 5, detail = "Step 2 of 5: Processing scans...")
 
-      shift_sigs <- map(list(x3ps$x3p1, x3ps$x3p2), function(x3p) {
-        insidepoly_df <- x3p_insidepoly_df(x3p, concavity = concavity, b = b)
-        x3p_inner_nomiss_res <- df_rmtrend_x3p(insidepoly_df)
-        x3p_inner_impute <- x3p_impute(x3p_inner_nomiss_res)
-        x3p_bin_rotate <- x3p_vertical(x3p_inner_impute,
-          freqs = c(0, colour_cutoff, 1),
-          min_score_cut = min_score_cut,
-          loess_span = loess_span
-        )
-        x3p_shift_sig_vec(x3p_bin_rotate, delta = delta_lower:delta_upper)
-      })
+      insidepoly_df_1 <- x3p_insidepoly_df(x3ps$x3p1, concavity = concavity, b = b)
+      insidepoly_df_2 <- x3p_insidepoly_df(x3ps$x3p2, concavity = concavity, b = b)
+
+      x3p_inner_nomiss_res_1 <- df_rmtrend_x3p(insidepoly_df_1)
+      x3p_inner_nomiss_res_2 <- df_rmtrend_x3p(insidepoly_df_2)
+
+      x3p_inner_impute_1 <- x3p_impute(x3p_inner_nomiss_res_1)
+      x3p_inner_impute_2 <- x3p_impute(x3p_inner_nomiss_res_2)
+
+      x3p_bin_rotate_1 <- x3p_vertical(x3p_inner_impute_1,
+                                     freqs = c(0, colour_cutoff, 1),
+                                     min_score_cut = min_score_cut,
+                                     loess_span = loess_span
+      )
+      x3p_bin_rotate_2 <- x3p_vertical(x3p_inner_impute_2,
+                                       freqs = c(0, colour_cutoff, 1),
+                                       min_score_cut = min_score_cut,
+                                       loess_span = loess_span
+      )
+
+      x3p_bin_shift_1 <- x3p_shift(x3p_bin_rotate_1, delta = delta_lower:delta_upper)
+      x3p_bin_shift_2 <- x3p_shift(x3p_bin_rotate_2, delta = delta_lower:delta_upper)
+
+      shift_sig_1 <- x3p_raw_sig_vec(x3p_bin_shift_1)
+      shift_sig_2 <- x3p_raw_sig_vec(x3p_bin_shift_2)
 
       incProgress(1 / 5, detail = "Step 3 of 5: Aligning signals...")
 
-      aligned <- bulletxtrctr::sig_align(shift_sigs[[1]]$sig, shift_sigs[[2]]$sig)
+      aligned <- bulletxtrctr::sig_align(shift_sig_1$sig, shift_sig_2$sig)
 
       incProgress(1 / 5, detail = "Step 4 of 5: Plotting...")
 
