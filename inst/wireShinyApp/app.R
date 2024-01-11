@@ -54,17 +54,37 @@ ui <- fluidPage(
       )
     ),
     mainPanel(
-      rglwidgetOutput("x3p1_plot"),
-      rglwidgetOutput("x3p2_plot"),
-      rglwidgetOutput("x3p_inner_nomiss_res_1_plot"),
-      rglwidgetOutput("x3p_inner_nomiss_res_2_plot"),
-      rglwidgetOutput("x3p_inner_impute_1_plot"),
-      rglwidgetOutput("x3p_inner_impute_2_plot"),
-      rglwidgetOutput("x3p_bin_rotate_1_plot"),
-      rglwidgetOutput("x3p_bin_rotate_2_plot"),
-      rglwidgetOutput("x3p_bin_shift_1_plot"),
-      rglwidgetOutput("x3p_bin_shift_2_plot"),
-      plotlyOutput("signals_plot")
+      tabsetPanel(
+        tabPanel(
+          "Original x3p images",
+          rglwidgetOutput("x3p1_plot"),
+          rglwidgetOutput("x3p2_plot")
+        ),
+        tabPanel(
+          "x3p images after detrending",
+          rglwidgetOutput("x3p_inner_nomiss_res_1_plot"),
+          rglwidgetOutput("x3p_inner_nomiss_res_2_plot")
+        ),
+        tabPanel(
+          "x3p images after imputing",
+          rglwidgetOutput("x3p_inner_impute_1_plot"),
+          rglwidgetOutput("x3p_inner_impute_2_plot")
+        ),
+        tabPanel(
+          "x3p images after rotating",
+          rglwidgetOutput("x3p_bin_rotate_1_plot"),
+          rglwidgetOutput("x3p_bin_rotate_2_plot")
+        ),
+        tabPanel(
+          "x3p images after shifting",
+          rglwidgetOutput("x3p_bin_shift_1_plot"),
+          rglwidgetOutput("x3p_bin_shift_2_plot")
+        ),
+        tabPanel(
+          "Signals after aligning",
+          plotlyOutput("signals_plot")
+        )
+      )
     )
   )
 )
