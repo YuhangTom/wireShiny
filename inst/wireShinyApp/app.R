@@ -63,6 +63,8 @@ server <- function(input, output) {
   x3ps <- reactiveValues(x3p1 = NULL, x3p2 = NULL)
 
   observeEvent(input$fileInput1, {
+    output$signals_plot <- NULL
+
     inFile1 <- input$fileInput1
 
     ext1 <- tools::file_ext(inFile1$datapath)
