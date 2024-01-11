@@ -39,13 +39,12 @@ ui <- fluidPage(
         numericInput("concavity", "Concavity (positive number)", value = 1.5, min = 1e-12),
         numericInput("b", "Block size b (positive integer)", value = 1, min = 1, step = 1),
         titlePanel("Rotation parameters"),
-        numericInput("red_cutoff", "Red cutoff", value = 0.3, min = 0, max = 1),
-        numericInput("blue_cutoff", "Blue cutoff", value = 0.7, min = 0, max = 1),
-        numericInput("min_score_cut", "Min score cut", value = 0.1, min = 0),
-        numericInput("loess_span", "Loess span", value = 0.2, min = 0),
+        sliderInput("colour_cutoff", "Colour cutoff", value = c(0.3, 0.7), min = 0, max = 1, step = 0.1),
+        numericInput("min_score_cut", "Min score cut (non-negative number)", value = 0.1, min = 0),
+        numericInput("loess_span", "Loess span (positive number)", value = 0.2, min = 0),
         titlePanel("Shifting parameters"),
-        numericInput("delta_lower", "Delta lower", value = -5, min = -Inf, max = -1, step = 1),
-        numericInput("delta_upper", "Delta upper", value = 5, min = 1, max = Inf, step = 1),
+        numericInput("delta_lower", "Delta lower (negative integer)", value = -5, max = -1, step = 1),
+        numericInput("delta_upper", "Delta upper (positive integer)", value = 5, min = 1, step = 1),
         actionButton("run_button", "Run")
       )
     ),
@@ -132,17 +131,11 @@ server <- function(input, output) {
     } else {
       b <- input$b
     }
-    if (is.na(input$red_cutoff)) {
-      showNotification("Red cutoff not provided, using default value 0.3.", type = "warning")
-      red_cutoff <- 0.3
+    if (near(input$colour_cutoff[1], input$colour_cutoff[2])) {
+      showNotification("Colour cutoffs cannot be the same, using default value 0.3 and 0.7.", type = "warning")
+      colour_cutoff <- c(0.3, 0.7)
     } else {
-      red_cutoff <- input$red_cutoff
-    }
-    if (is.na(input$blue_cutoff)) {
-      showNotification("Blue cutoff not provided, using default value 0.7.", type = "warning")
-      blue_cutoff <- 0.7
-    } else {
-      blue_cutoff <- input$blue_cutoff
+      colour_cutoff <- input$colour_cutoff
     }
     if (is.na(input$min_score_cut)) {
       showNotification("Min score cut not provided, using default value 0.1.", type = "warning")
@@ -174,7 +167,7 @@ server <- function(input, output) {
       x3p_inner_nomiss_res <- df_rmtrend_x3p(insidepoly_df)
       x3p_inner_impute <- x3p_impute(x3p_inner_nomiss_res)
       x3p_bin_rotate <- x3p_vertical(x3p_inner_impute,
-        freqs = c(0, red_cutoff, blue_cutoff, 1),
+        freqs = c(0, colour_cutoff, 1),
         min_score_cut = min_score_cut,
         loess_span = loess_span
       )
