@@ -56,6 +56,10 @@ ui <- fluidPage(
     mainPanel(
       tabsetPanel(
         tabPanel(
+          "Signals after aligning",
+          plotlyOutput("signals_plot")
+        ),
+        tabPanel(
           "Original x3p images",
           rglwidgetOutput("x3p1_plot"),
           rglwidgetOutput("x3p2_plot")
@@ -79,10 +83,6 @@ ui <- fluidPage(
           "x3p images after shifting",
           rglwidgetOutput("x3p_bin_shift_1_plot"),
           rglwidgetOutput("x3p_bin_shift_2_plot")
-        ),
-        tabPanel(
-          "Signals after aligning",
-          plotlyOutput("signals_plot")
         )
       )
     )
