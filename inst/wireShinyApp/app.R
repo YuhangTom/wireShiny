@@ -122,7 +122,11 @@ server <- function(input, output) {
 
   observeEvent(input$run_button, {
     withProgress(message = "Processing", value = 0, {
-      incProgress(1 / 5, detail = "Step 1 of 5: Checking parameters...")
+      n_step <- 5
+
+      incProgress(1 / n_step,
+        detail = sprintf("Step 1 of %d: Checking parameters...", n_step)
+      )
 
       if (is.na(input$concavity)) {
         showNotification("Concavity not provided, using default value 1.5.", type = "warning")
@@ -167,7 +171,9 @@ server <- function(input, output) {
         delta_upper <- input$delta_upper
       }
 
-      incProgress(1 / 5, detail = "Step 2 of 5: Processing scans...")
+      incProgress(1 / n_step,
+        detail = sprintf("Step 2 of %d: Processing scans...", n_step)
+      )
 
       insidepoly_df_1 <- x3p_insidepoly_df(x3ps$x3p1, concavity = concavity, b = b)
       insidepoly_df_2 <- x3p_insidepoly_df(x3ps$x3p2, concavity = concavity, b = b)
@@ -179,14 +185,14 @@ server <- function(input, output) {
       x3p_inner_impute_2 <- x3p_impute(x3p_inner_nomiss_res_2)
 
       x3p_bin_rotate_1 <- x3p_vertical(x3p_inner_impute_1,
-                                     freqs = c(0, colour_cutoff, 1),
-                                     min_score_cut = min_score_cut,
-                                     loess_span = loess_span
+        freqs = c(0, colour_cutoff, 1),
+        min_score_cut = min_score_cut,
+        loess_span = loess_span
       )
       x3p_bin_rotate_2 <- x3p_vertical(x3p_inner_impute_2,
-                                       freqs = c(0, colour_cutoff, 1),
-                                       min_score_cut = min_score_cut,
-                                       loess_span = loess_span
+        freqs = c(0, colour_cutoff, 1),
+        min_score_cut = min_score_cut,
+        loess_span = loess_span
       )
 
       x3p_bin_shift_1 <- x3p_shift(x3p_bin_rotate_1, delta = delta_lower:delta_upper)
@@ -195,11 +201,15 @@ server <- function(input, output) {
       shift_sig_1 <- x3p_raw_sig_vec(x3p_bin_shift_1)
       shift_sig_2 <- x3p_raw_sig_vec(x3p_bin_shift_2)
 
-      incProgress(1 / 5, detail = "Step 3 of 5: Aligning signals...")
+      incProgress(1 / n_step,
+        detail = sprintf("Step 3 of %d: Aligning signals...", n_step)
+      )
 
       aligned <- bulletxtrctr::sig_align(shift_sig_1$sig, shift_sig_2$sig)
 
-      incProgress(1 / 5, detail = "Step 4 of 5: Plotting...")
+      incProgress(1 / n_step,
+        detail = sprintf("Step 4 of %d: Plotting...", n_step)
+      )
 
       p_signals <- aligned$lands %>%
         pivot_longer(sig1:sig2, names_to = "x3p", names_prefix = "sig") %>%
@@ -215,7 +225,9 @@ server <- function(input, output) {
         p_signals
       })
 
-      incProgress(1 / 5, detail = "Step 5 of 5: Complete.")
+      incProgress(1 / n_step,
+        detail = sprintf("Step 5 of %d: Complete.", n_step)
+      )
 
       Sys.sleep(1)
     })
