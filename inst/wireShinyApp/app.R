@@ -210,12 +210,12 @@ server <- function(input, output) {
 
       output$x3p1_plot <- renderRglwidget({
         x3ps$x3p1 %>%
-          x3p_image_autosize()
+          x3p_image_autosize(zoom = 0.8)
         rglwidget()
       })
       output$x3p2_plot <- renderRglwidget({
         x3ps$x3p2 %>%
-          x3p_image_autosize()
+          x3p_image_autosize(zoom = 0.8)
         rglwidget()
       })
 
@@ -232,13 +232,13 @@ server <- function(input, output) {
       output$x3p_inner_nomiss_res_1_plot <- renderRglwidget({
         x3p_inner_nomiss_res_1 %>%
           x3p_delete_mask() %>%
-          x3p_image_autosize()
+          x3p_image_autosize(zoom = 0.8)
         rglwidget()
       })
       output$x3p_inner_nomiss_res_2_plot <- renderRglwidget({
         x3p_inner_nomiss_res_2 %>%
           x3p_delete_mask() %>%
-          x3p_image_autosize()
+          x3p_image_autosize(zoom = 0.8)
         rglwidget()
       })
 
@@ -251,12 +251,12 @@ server <- function(input, output) {
 
       output$x3p_inner_impute_1_plot <- renderRglwidget({
         x3p_inner_impute_1 %>%
-          x3p_image_autosize()
+          x3p_image_autosize(zoom = 0.8)
         rglwidget()
       })
       output$x3p_inner_impute_2_plot <- renderRglwidget({
         x3p_inner_impute_2 %>%
-          x3p_image_autosize()
+          x3p_image_autosize(zoom = 0.8)
         rglwidget()
       })
 
@@ -277,12 +277,12 @@ server <- function(input, output) {
 
       output$x3p_bin_rotate_1_plot <- renderRglwidget({
         x3p_bin_rotate_1 %>%
-          x3p_image_autosize()
+          x3p_image_autosize(zoom = 0.8)
         rglwidget()
       })
       output$x3p_bin_rotate_2_plot <- renderRglwidget({
         x3p_bin_rotate_2 %>%
-          x3p_image_autosize()
+          x3p_image_autosize(zoom = 0.8)
         rglwidget()
       })
 
@@ -295,12 +295,12 @@ server <- function(input, output) {
 
       output$x3p_bin_shift_1_plot <- renderRglwidget({
         x3p_bin_shift_1 %>%
-          x3p_image_autosize()
+          x3p_image_autosize(zoom = 0.8)
         rglwidget()
       })
       output$x3p_bin_shift_2_plot <- renderRglwidget({
         x3p_bin_shift_2 %>%
-          x3p_image_autosize()
+          x3p_image_autosize(zoom = 0.8)
         rglwidget()
       })
 
