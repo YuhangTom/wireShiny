@@ -4,6 +4,7 @@ library(shinyWidgets) # showNotification
 
 library(tidyverse)
 library(plotly)
+library(rgl) # rglwidgetOutput, rglwidget
 
 library(x3ptools)
 library(wire)
@@ -53,6 +54,16 @@ ui <- fluidPage(
       )
     ),
     mainPanel(
+      rglwidgetOutput("x3p1_plot"),
+      rglwidgetOutput("x3p2_plot"),
+      rglwidgetOutput("x3p_inner_nomiss_res_1_plot"),
+      rglwidgetOutput("x3p_inner_nomiss_res_2_plot"),
+      rglwidgetOutput("x3p_inner_impute_1_plot"),
+      rglwidgetOutput("x3p_inner_impute_2_plot"),
+      rglwidgetOutput("x3p_bin_rotate_1_plot"),
+      rglwidgetOutput("x3p_bin_rotate_2_plot"),
+      rglwidgetOutput("x3p_bin_shift_1_plot"),
+      rglwidgetOutput("x3p_bin_shift_2_plot"),
       plotlyOutput("signals_plot")
     )
   )
@@ -177,6 +188,17 @@ server <- function(input, output) {
         detail = sprintf("Step 2 of %d: Computing summaries for scans...", n_step)
       )
 
+      output$x3p1_plot <- renderRglwidget({
+        x3ps$x3p1 %>%
+          x3p_image_autosize()
+        rglwidget()
+      })
+      output$x3p2_plot <- renderRglwidget({
+        x3ps$x3p2 %>%
+          x3p_image_autosize()
+        rglwidget()
+      })
+
       insidepoly_df_1 <- x3p_insidepoly_df(x3ps$x3p1, concavity = concavity, b = b)
       insidepoly_df_2 <- x3p_insidepoly_df(x3ps$x3p2, concavity = concavity, b = b)
 
@@ -187,12 +209,34 @@ server <- function(input, output) {
       x3p_inner_nomiss_res_1 <- df_rmtrend_x3p(insidepoly_df_1)
       x3p_inner_nomiss_res_2 <- df_rmtrend_x3p(insidepoly_df_2)
 
+      output$x3p_inner_nomiss_res_1_plot <- renderRglwidget({
+        x3p_inner_nomiss_res_1 %>%
+          x3p_image_autosize()
+        rglwidget()
+      })
+      output$x3p_inner_nomiss_res_2_plot <- renderRglwidget({
+        x3p_inner_nomiss_res_2 %>%
+          x3p_image_autosize()
+        rglwidget()
+      })
+
       incProgress(1 / n_step,
         detail = sprintf("Step 4 of %d: Imputing for missing values...", n_step)
       )
 
       x3p_inner_impute_1 <- x3p_impute(x3p_inner_nomiss_res_1)
       x3p_inner_impute_2 <- x3p_impute(x3p_inner_nomiss_res_2)
+
+      output$x3p_inner_impute_1_plot <- renderRglwidget({
+        x3p_inner_impute_1 %>%
+          x3p_image_autosize()
+        rglwidget()
+      })
+      output$x3p_inner_impute_2_plot <- renderRglwidget({
+        x3p_inner_impute_2 %>%
+          x3p_image_autosize()
+        rglwidget()
+      })
 
       incProgress(1 / n_step,
         detail = sprintf("Step 5 of %d: Rotating scans...", n_step)
@@ -209,12 +253,34 @@ server <- function(input, output) {
         loess_span = loess_span
       )
 
+      output$x3p_bin_rotate_1_plot <- renderRglwidget({
+        x3p_bin_rotate_1 %>%
+          x3p_image_autosize()
+        rglwidget()
+      })
+      output$x3p_bin_rotate_2_plot <- renderRglwidget({
+        x3p_bin_rotate_2 %>%
+          x3p_image_autosize()
+        rglwidget()
+      })
+
       incProgress(1 / n_step,
         detail = sprintf("Step 6 of %d: Shifting scans...", n_step)
       )
 
       x3p_bin_shift_1 <- x3p_shift(x3p_bin_rotate_1, delta = delta_lower:delta_upper)
       x3p_bin_shift_2 <- x3p_shift(x3p_bin_rotate_2, delta = delta_lower:delta_upper)
+
+      output$x3p_bin_shift_1_plot <- renderRglwidget({
+        x3p_bin_shift_1 %>%
+          x3p_image_autosize()
+        rglwidget()
+      })
+      output$x3p_bin_shift_2_plot <- renderRglwidget({
+        x3p_bin_shift_2 %>%
+          x3p_image_autosize()
+        rglwidget()
+      })
 
       incProgress(1 / n_step,
         detail = sprintf("Step 7 of %d: Extracting signals...", n_step)
