@@ -231,11 +231,13 @@ server <- function(input, output) {
 
       output$x3p_inner_nomiss_res_1_plot <- renderRglwidget({
         x3p_inner_nomiss_res_1 %>%
+          x3p_delete_mask() %>%
           x3p_image_autosize()
         rglwidget()
       })
       output$x3p_inner_nomiss_res_2_plot <- renderRglwidget({
         x3p_inner_nomiss_res_2 %>%
+          x3p_delete_mask() %>%
           x3p_image_autosize()
         rglwidget()
       })
