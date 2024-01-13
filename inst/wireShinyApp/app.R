@@ -7,6 +7,7 @@ library(plotly)
 library(rgl) # rglwidgetOutput, rglwidget
 
 library(x3ptools)
+if (!require(wire)) devtools::install_github("YuhangTom/wire")
 library(wire)
 
 
