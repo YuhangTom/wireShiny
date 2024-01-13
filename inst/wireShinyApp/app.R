@@ -10,6 +10,8 @@ library(x3ptools)
 if (!require(wire)) devtools::install_github("YuhangTom/wire")
 library(wire)
 
+# Increase the limit to 20MB
+options(shiny.maxRequestSize = 20 * 1024^2)
 
 ui <- fluidPage(
   useShinyjs(),
@@ -29,11 +31,11 @@ ui <- fluidPage(
     "))
       ),
       titlePanel("File inputs"),
-      fileInput("fileInput1", "Choose file (Max size: 5MB, Acceptable formats: .x3p, .rda)", accept = c(".x3p", ".rda")),
+      fileInput("fileInput1", "Choose file (Max size: 20MB, Acceptable formats: .x3p, .rda)", accept = c(".x3p", ".rda")),
       hidden(
         div(
           id = "secondFileInput",
-          fileInput("fileInput2", "Choose file (Max size: 5MB, Acceptable format: .x3p)", accept = c(".x3p"))
+          fileInput("fileInput2", "Choose file (Max size: 20MB, Acceptable format: .x3p)", accept = c(".x3p"))
         )
       ),
       actionButton("clear", "Clear files"),
