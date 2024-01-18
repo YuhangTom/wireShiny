@@ -106,7 +106,7 @@ server <- function(input, output) {
     ext1 <- tools::file_ext(inFile1$datapath)
 
     if (ext1 == "x3p") {
-      show("secondFileInput")
+      shinyjs::show("secondFileInput")
 
       x3p1 <- x3p_read(inFile1$datapath)
       x3p2 <- NULL
@@ -152,7 +152,7 @@ server <- function(input, output) {
     if (is.null(x3ps$x3p2)) {
       hide("parametersInput")
     } else {
-      show("parametersInput")
+      shinyjs::show("parametersInput")
     }
   })
 
