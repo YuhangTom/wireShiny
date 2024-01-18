@@ -58,6 +58,8 @@ ui <- fluidPage(
     ),
     mainPanel(
       tabsetPanel(
+        id = "tabsetPanel",
+        selected = "Signals after aligning",
         tabPanel(
           "Signals after aligning",
           plotlyOutput("signals_plot")
@@ -153,6 +155,18 @@ server <- function(input, output) {
       hide("parametersInput")
     } else {
       shinyjs::show("parametersInput")
+
+      updateTabsetPanel(inputId = "tabsetPanel", selected = "Original x3p images")
+      output$x3p1_plot <- renderRglwidget({
+        x3ps$x3p1 %>%
+          x3p_image_autosize(zoom = 0.8)
+        rglwidget()
+      })
+      output$x3p2_plot <- renderRglwidget({
+        x3ps$x3p2 %>%
+          x3p_image_autosize(zoom = 0.8)
+        rglwidget()
+      })
     }
   })
 
@@ -210,17 +224,6 @@ server <- function(input, output) {
       incProgress(1 / n_step,
         detail = sprintf("Step 2 of %d: Computing summaries for scans...", n_step)
       )
-
-      output$x3p1_plot <- renderRglwidget({
-        x3ps$x3p1 %>%
-          x3p_image_autosize(zoom = 0.8)
-        rglwidget()
-      })
-      output$x3p2_plot <- renderRglwidget({
-        x3ps$x3p2 %>%
-          x3p_image_autosize(zoom = 0.8)
-        rglwidget()
-      })
 
       insidepoly_df_1 <- x3p_insidepoly_df(x3ps$x3p1, concavity = concavity, b = b)
       insidepoly_df_2 <- x3p_insidepoly_df(x3ps$x3p2, concavity = concavity, b = b)
@@ -338,6 +341,8 @@ server <- function(input, output) {
         p_signals %>%
           ggplotly()
       })
+
+      updateTabsetPanel(inputId = "tabsetPanel", selected = "Signals after aligning")
 
       incProgress(1 / n_step,
         detail = sprintf("Step 10 of %d: Complete.", n_step)
