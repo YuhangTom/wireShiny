@@ -2,7 +2,7 @@ Package: wireShiny
 Title: Run the Shiny App Based on Functionalities of `wire`
 Version: 0.0.0.9000
 Authors@R: c(
-    person("Yuhang", "Lin", , "yhlin@iastate.edu", role = c("aut", "cre"),
+    person("Yuhang", "Lin", , "yhlin@iastate.edu", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-3600-9889")),
     person("Heike", "Hofmann", , "hofmann@iastate.edu", role = "aut",
            comment = c(ORCID = "0000-0001-6216-5183"))
