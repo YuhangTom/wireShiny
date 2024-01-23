@@ -67,7 +67,9 @@ ui <- fluidPage(
         tabPanel(
           "Original x3p images",
           rglwidgetOutput("x3p1_plot"),
-          rglwidgetOutput("x3p2_plot")
+          rglwidgetOutput("x3p2_plot"),
+          plotlyOutput("number_of_missing_immediate_neighbors_boxplot_1"),
+          plotlyOutput("number_of_missing_immediate_neighbors_boxplot_2")
         ),
         tabPanel(
           "x3p images after detrending",
@@ -225,8 +227,17 @@ server <- function(input, output) {
         detail = sprintf("Step 2 of %d: Computing summaries for scans...", n_step)
       )
 
-      insidepoly_df_1 <- x3p_insidepoly_df(x3ps$x3p1, concavity = concavity, b = b)
-      insidepoly_df_2 <- x3p_insidepoly_df(x3ps$x3p2, concavity = concavity, b = b)
+      insidepoly_df_1 <- x3p_insidepoly_df(x3ps$x3p1, concavity = concavity, b = b, ifplot = TRUE)
+      insidepoly_df_2 <- x3p_insidepoly_df(x3ps$x3p2, concavity = concavity, b = b, ifplot = TRUE)
+
+      output$number_of_missing_immediate_neighbors_boxplot_1 <- renderPlotly({
+        attr(insidepoly_df_1, "number_of_missing_immediate_neighbors_boxplot") %>%
+          ggplotly()
+      })
+      output$number_of_missing_immediate_neighbors_boxplot_2 <- renderPlotly({
+        attr(insidepoly_df_2, "number_of_missing_immediate_neighbors_boxplot") %>%
+          ggplotly()
+      })
 
       incProgress(1 / n_step,
         detail = sprintf("Step 3 of %d: Detrending...", n_step)
