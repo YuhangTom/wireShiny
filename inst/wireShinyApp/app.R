@@ -144,26 +144,6 @@ ui <- fluidPage(
               width = 6,
               plotlyOutput("MLE_loess_red_plot_2")
             )
-          ),
-          fluidRow(
-            column(
-              width = 6,
-              plotlyOutput("nfline_blue_plot_1")
-            ),
-            column(
-              width = 6,
-              plotlyOutput("nfline_blue_plot_2")
-            )
-          ),
-          fluidRow(
-            column(
-              width = 6,
-              plotlyOutput("MLE_loess_blue_plot_1")
-            ),
-            column(
-              width = 6,
-              plotlyOutput("MLE_loess_blue_plot_2")
-            )
           )
         ),
         tabPanel(
@@ -407,24 +387,12 @@ server <- function(input, output) {
         attr(x3p_bin_rotate_1, "MLE_loess_red_plot") %>%
           ggplotly()
       })
-      output$nfline_blue_plot_1 <- renderPlotly({
-        attr(x3p_bin_rotate_1, "nfline_blue_plot") %>%
-          ggplotly()
-      })
-      output$MLE_loess_blue_plot_1 <- renderPlotly({
-        attr(x3p_bin_rotate_1, "MLE_loess_blue_plot") %>%
-          ggplotly()
-      })
       output$nfline_red_plot_2 <- renderPlotly({
         attr(x3p_bin_rotate_2, "nfline_red_plot") %>%
           ggplotly()
       })
       output$MLE_loess_red_plot_2 <- renderPlotly({
         attr(x3p_bin_rotate_2, "MLE_loess_red_plot") %>%
-          ggplotly()
-      })
-      output$nfline_blue_plot_2 <- renderPlotly({
-        attr(x3p_bin_rotate_2, "nfline_blue_plot") %>%
           ggplotly()
       })
 
