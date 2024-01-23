@@ -66,38 +66,118 @@ ui <- fluidPage(
         ),
         tabPanel(
           "Original x3p images",
-          rglwidgetOutput("x3p1_plot"),
-          rglwidgetOutput("x3p2_plot"),
-          plotlyOutput("number_of_missing_immediate_neighbors_boxplot_1"),
-          plotlyOutput("number_of_missing_immediate_neighbors_boxplot_2")
+          fluidRow(
+            column(
+              width = 6,
+              rglwidgetOutput("x3p1_plot")
+            ),
+            column(
+              width = 6,
+              rglwidgetOutput("x3p2_plot")
+            )
+          ),
+          fluidRow(
+            column(
+              width = 6,
+              plotlyOutput("number_of_missing_immediate_neighbors_boxplot_1")
+            ),
+            column(
+              width = 6,
+              plotlyOutput("number_of_missing_immediate_neighbors_boxplot_2")
+            )
+          )
         ),
         tabPanel(
           "x3p images after detrending",
-          rglwidgetOutput("x3p_inner_nomiss_res_1_plot"),
-          rglwidgetOutput("x3p_inner_nomiss_res_2_plot")
+          fluidRow(
+            column(
+              width = 6,
+              rglwidgetOutput("x3p_inner_nomiss_res_1_plot")
+            ),
+            column(
+              width = 6,
+              rglwidgetOutput("x3p_inner_nomiss_res_2_plot")
+            )
+          )
         ),
         tabPanel(
           "x3p images after imputing",
-          rglwidgetOutput("x3p_inner_impute_1_plot"),
-          rglwidgetOutput("x3p_inner_impute_2_plot")
+          fluidRow(
+            column(
+              width = 6,
+              rglwidgetOutput("x3p_inner_impute_1_plot")
+            ),
+            column(
+              width = 6,
+              rglwidgetOutput("x3p_inner_impute_2_plot")
+            )
+          )
         ),
         tabPanel(
           "x3p images after rotating",
-          rglwidgetOutput("x3p_bin_rotate_1_plot"),
-          rglwidgetOutput("x3p_bin_rotate_2_plot"),
-          plotlyOutput("nfline_red_plot_1"),
-          plotlyOutput("MLE_loess_red_plot_1"),
-          plotlyOutput("nfline_blue_plot_1"),
-          plotlyOutput("MLE_loess_blue_plot_1"),
-          plotlyOutput("nfline_red_plot_2"),
-          plotlyOutput("MLE_loess_red_plot_2"),
-          plotlyOutput("nfline_blue_plot_2"),
-          plotlyOutput("MLE_loess_blue_plot_2")
+          fluidRow(
+            column(
+              width = 6,
+              rglwidgetOutput("x3p_bin_rotate_1_plot")
+            ),
+            column(
+              width = 6,
+              rglwidgetOutput("x3p_bin_rotate_2_plot")
+            )
+          ),
+          fluidRow(
+            column(
+              width = 6,
+              plotlyOutput("nfline_red_plot_1")
+            ),
+            column(
+              width = 6,
+              plotlyOutput("nfline_red_plot_2")
+            )
+          ),
+          fluidRow(
+            column(
+              width = 6,
+              plotlyOutput("MLE_loess_red_plot_1")
+            ),
+            column(
+              width = 6,
+              plotlyOutput("MLE_loess_red_plot_2")
+            )
+          ),
+          fluidRow(
+            column(
+              width = 6,
+              plotlyOutput("nfline_blue_plot_1")
+            ),
+            column(
+              width = 6,
+              plotlyOutput("nfline_blue_plot_2")
+            )
+          ),
+          fluidRow(
+            column(
+              width = 6,
+              plotlyOutput("MLE_loess_blue_plot_1")
+            ),
+            column(
+              width = 6,
+              plotlyOutput("MLE_loess_blue_plot_2")
+            )
+          )
         ),
         tabPanel(
           "x3p images after shifting",
-          rglwidgetOutput("x3p_bin_shift_1_plot"),
-          rglwidgetOutput("x3p_bin_shift_2_plot")
+          fluidRow(
+            column(
+              width = 6,
+              rglwidgetOutput("x3p_bin_shift_1_plot")
+            ),
+            column(
+              width = 6,
+              rglwidgetOutput("x3p_bin_shift_2_plot")
+            )
+          )
         )
       )
     )
