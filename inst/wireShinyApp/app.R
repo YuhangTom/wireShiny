@@ -182,7 +182,7 @@ server <- function(input, output) {
 
   observeEvent(input$run_button, {
     withProgress(message = "Processing", value = 0, {
-      n_step <- 10
+      n_step <- 9
 
       incProgress(1 / n_step,
         detail = sprintf("Step 1 of %d: Checking parameters...", n_step)
@@ -377,10 +377,6 @@ server <- function(input, output) {
         ifplot = TRUE
       )
 
-      incProgress(1 / n_step,
-        detail = sprintf("Step 9 of %d: Plotting...", n_step)
-      )
-
       output$sig_align_plot <- renderPlotly({
         attr(aligned, "sig_align_plot") %>%
           ggplotly()
@@ -389,7 +385,7 @@ server <- function(input, output) {
       updateTabsetPanel(inputId = "tabsetPanel", selected = "Signals after aligning")
 
       incProgress(1 / n_step,
-        detail = sprintf("Step 10 of %d: Complete.", n_step)
+        detail = sprintf("Step 9 of %d: Complete.", n_step)
       )
 
       Sys.sleep(1)
