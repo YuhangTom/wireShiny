@@ -84,7 +84,15 @@ ui <- fluidPage(
         tabPanel(
           "x3p images after rotating",
           rglwidgetOutput("x3p_bin_rotate_1_plot"),
-          rglwidgetOutput("x3p_bin_rotate_2_plot")
+          rglwidgetOutput("x3p_bin_rotate_2_plot"),
+          plotlyOutput("nfline_red_plot_1"),
+          plotlyOutput("MLE_loess_red_plot_1"),
+          plotlyOutput("nfline_blue_plot_1"),
+          plotlyOutput("MLE_loess_blue_plot_1"),
+          plotlyOutput("nfline_red_plot_2"),
+          plotlyOutput("MLE_loess_red_plot_2"),
+          plotlyOutput("nfline_blue_plot_2"),
+          plotlyOutput("MLE_loess_blue_plot_2")
         ),
         tabPanel(
           "x3p images after shifting",
@@ -284,12 +292,14 @@ server <- function(input, output) {
       x3p_bin_rotate_1 <- x3p_vertical(x3p_inner_impute_1,
         freqs = c(0, colour_cutoff, 1),
         min_score_cut = min_score_cut,
-        loess_span = loess_span
+        loess_span = loess_span,
+        ifplot = TRUE
       )
       x3p_bin_rotate_2 <- x3p_vertical(x3p_inner_impute_2,
         freqs = c(0, colour_cutoff, 1),
         min_score_cut = min_score_cut,
-        loess_span = loess_span
+        loess_span = loess_span,
+        ifplot = TRUE
       )
 
       output$x3p_bin_rotate_1_plot <- renderRglwidget({
@@ -301,6 +311,35 @@ server <- function(input, output) {
         x3p_bin_rotate_2 %>%
           x3p_image_autosize(zoom = 0.8)
         rglwidget()
+      })
+
+      output$nfline_red_plot_1 <- renderPlotly({
+        attr(x3p_bin_rotate_1, "nfline_red_plot") %>%
+          ggplotly()
+      })
+      output$MLE_loess_red_plot_1 <- renderPlotly({
+        attr(x3p_bin_rotate_1, "MLE_loess_red_plot") %>%
+          ggplotly()
+      })
+      output$nfline_blue_plot_1 <- renderPlotly({
+        attr(x3p_bin_rotate_1, "nfline_blue_plot") %>%
+          ggplotly()
+      })
+      output$MLE_loess_blue_plot_1 <- renderPlotly({
+        attr(x3p_bin_rotate_1, "MLE_loess_blue_plot") %>%
+          ggplotly()
+      })
+      output$nfline_red_plot_2 <- renderPlotly({
+        attr(x3p_bin_rotate_2, "nfline_red_plot") %>%
+          ggplotly()
+      })
+      output$MLE_loess_red_plot_2 <- renderPlotly({
+        attr(x3p_bin_rotate_2, "MLE_loess_red_plot") %>%
+          ggplotly()
+      })
+      output$nfline_blue_plot_2 <- renderPlotly({
+        attr(x3p_bin_rotate_2, "nfline_blue_plot") %>%
+          ggplotly()
       })
 
       incProgress(1 / n_step,
