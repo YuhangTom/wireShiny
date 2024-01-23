@@ -183,10 +183,12 @@ server <- function(input, output) {
   observeEvent(input$run_button, {
     withProgress(message = "Processing", value = 0, {
       n_step <- 9
+      i_step <- 1
 
       incProgress(1 / n_step,
-        detail = sprintf("Step 1 of %d: Checking parameters...", n_step)
+        detail = sprintf("Step %d of %d: Checking parameters...", i_step, n_step)
       )
+      i_step <- i_step + 1
 
       if (is.na(input$concavity)) {
         showNotification("Concavity not provided, using default value 1.5.", type = "warning")
@@ -232,8 +234,9 @@ server <- function(input, output) {
       }
 
       incProgress(1 / n_step,
-        detail = sprintf("Step 2 of %d: Computing summaries for scans...", n_step)
+        detail = sprintf("Step %d of %d: Computing summaries for scans...", i_step, n_step)
       )
+      i_step <- i_step + 1
 
       insidepoly_df_1 <- x3p_insidepoly_df(x3ps$x3p1, concavity = concavity, b = b, ifplot = TRUE)
       insidepoly_df_2 <- x3p_insidepoly_df(x3ps$x3p2, concavity = concavity, b = b, ifplot = TRUE)
@@ -248,8 +251,9 @@ server <- function(input, output) {
       })
 
       incProgress(1 / n_step,
-        detail = sprintf("Step 3 of %d: Detrending...", n_step)
+        detail = sprintf("Step %d of %d: Detrending...", i_step, n_step)
       )
+      i_step <- i_step + 1
 
       x3p_inner_nomiss_res_1 <- df_rmtrend_x3p(insidepoly_df_1)
       x3p_inner_nomiss_res_2 <- df_rmtrend_x3p(insidepoly_df_2)
@@ -268,8 +272,9 @@ server <- function(input, output) {
       })
 
       incProgress(1 / n_step,
-        detail = sprintf("Step 4 of %d: Imputing for missing values...", n_step)
+        detail = sprintf("Step %d of %d: Imputing for missing values...", i_step, n_step)
       )
+      i_step <- i_step + 1
 
       x3p_inner_impute_1 <- x3p_impute(x3p_inner_nomiss_res_1)
       x3p_inner_impute_2 <- x3p_impute(x3p_inner_nomiss_res_2)
@@ -286,8 +291,9 @@ server <- function(input, output) {
       })
 
       incProgress(1 / n_step,
-        detail = sprintf("Step 5 of %d: Rotating scans...", n_step)
+        detail = sprintf("Step %d of %d: Rotating scans...", i_step, n_step)
       )
+      i_step <- i_step + 1
 
       x3p_bin_rotate_1 <- x3p_vertical(x3p_inner_impute_1,
         freqs = c(0, colour_cutoff, 1),
@@ -343,8 +349,9 @@ server <- function(input, output) {
       })
 
       incProgress(1 / n_step,
-        detail = sprintf("Step 6 of %d: Shifting scans...", n_step)
+        detail = sprintf("Step %d of %d: Shifting scans...", i_step, n_step)
       )
+      i_step <- i_step + 1
 
       x3p_bin_shift_1 <- x3p_shift(x3p_bin_rotate_1, delta = delta_lower:delta_upper)
       x3p_bin_shift_2 <- x3p_shift(x3p_bin_rotate_2, delta = delta_lower:delta_upper)
@@ -361,15 +368,17 @@ server <- function(input, output) {
       })
 
       incProgress(1 / n_step,
-        detail = sprintf("Step 7 of %d: Extracting signals...", n_step)
+        detail = sprintf("Step %d of %d: Extracting signals...", i_step, n_step)
       )
+      i_step <- i_step + 1
 
       shift_sig_1 <- x3p_raw_sig_vec(x3p_bin_shift_1)
       shift_sig_2 <- x3p_raw_sig_vec(x3p_bin_shift_2)
 
       incProgress(1 / n_step,
-        detail = sprintf("Step 8 of %d: Aligning signals...", n_step)
+        detail = sprintf("Step %d of %d: Aligning signals...", i_step, n_step)
       )
+      i_step <- i_step + 1
 
       aligned <- vec_align_sigs_list(
         shift_sig_1$sig,
@@ -385,8 +394,9 @@ server <- function(input, output) {
       updateTabsetPanel(inputId = "tabsetPanel", selected = "Signals after aligning")
 
       incProgress(1 / n_step,
-        detail = sprintf("Step 9 of %d: Complete.", n_step)
+        detail = sprintf("Step %d of %d: Complete.", i_step, n_step)
       )
+      i_step <- i_step + 1
 
       Sys.sleep(1)
     })
