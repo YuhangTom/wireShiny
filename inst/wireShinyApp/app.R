@@ -62,7 +62,7 @@ ui <- fluidPage(
         selected = "Signals after aligning",
         tabPanel(
           "Signals after aligning",
-          plotlyOutput("signals_plot")
+          plotlyOutput("sig_align_plot")
         ),
         tabPanel(
           "Original x3p images",
@@ -101,7 +101,7 @@ server <- function(input, output) {
   x3ps <- reactiveValues(x3p1 = NULL, x3p2 = NULL)
 
   observeEvent(input$fileInput1, {
-    output$signals_plot <- NULL
+    output$sig_align_plot <- NULL
 
     inFile1 <- input$fileInput1
 
@@ -147,7 +147,7 @@ server <- function(input, output) {
     x3ps$x3p1 <- NULL
     x3ps$x3p2 <- NULL
     hide("secondFileInput")
-    output$signals_plot <- NULL
+    output$sig_align_plot <- NULL
   })
 
   observe({
@@ -321,24 +321,18 @@ server <- function(input, output) {
         detail = sprintf("Step 8 of %d: Aligning signals...", n_step)
       )
 
-      aligned <- bulletxtrctr::sig_align(shift_sig_1$sig, shift_sig_2$sig)
+      aligned <- vec_align_sigs_list(
+        shift_sig_1$sig,
+        shift_sig_2$sig,
+        ifplot = TRUE
+      )
 
       incProgress(1 / n_step,
         detail = sprintf("Step 9 of %d: Plotting...", n_step)
       )
 
-      p_signals <- aligned$lands %>%
-        pivot_longer(sig1:sig2, names_to = "x3p", names_prefix = "sig") %>%
-        ggplot(aes(x = x, y = value)) +
-        geom_line(aes(colour = x3p)) +
-        theme_bw() +
-        scale_colour_brewer(palette = "Paired") +
-        xlab("x") +
-        ylab("signal value") +
-        ggtitle(paste0("CCF: ", round(aligned$ccf, 4)))
-
-      output$signals_plot <- renderPlotly({
-        p_signals %>%
+      output$sig_align_plot <- renderPlotly({
+        attr(aligned, "sig_align_plot") %>%
           ggplotly()
       })
 
