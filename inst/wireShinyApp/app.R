@@ -111,6 +111,16 @@ ui <- fluidPage(
               width = 6,
               rglwidgetOutput("x3p_inner_impute_2_plot")
             )
+          ),
+          fluidRow(
+            column(
+              width = 6,
+              imageOutput("impute_gif_1_plot")
+            ),
+            column(
+              width = 6,
+              imageOutput("impute_gif_2_plot")
+            )
           )
         ),
         tabPanel(
@@ -336,8 +346,9 @@ server <- function(input, output) {
       )
       i_step <- i_step + 1
 
-      x3p_inner_impute_1 <- x3p_impute(x3p_inner_nomiss_res_1)
-      x3p_inner_impute_2 <- x3p_impute(x3p_inner_nomiss_res_2)
+      dir_name <- tempdir()
+      x3p_inner_impute_1 <- x3p_impute(x3p_inner_nomiss_res_1, ifsave = TRUE, dir_name = dir_name, gif_name = "focal_impute_1.gif")
+      x3p_inner_impute_2 <- x3p_impute(x3p_inner_nomiss_res_2, ifsave = TRUE, dir_name = dir_name, gif_name = "focal_impute_2.gif")
 
       output$x3p_inner_impute_1_plot <- renderRglwidget({
         x3p_inner_impute_1 %>%
@@ -349,6 +360,19 @@ server <- function(input, output) {
           x3p_image_autosize(zoom = 1.5)
         rglwidget()
       })
+
+      output$impute_gif_1_plot <- renderImage(
+        {
+          list(src = paste0(dir_name, "/focal_impute_1.gif"), contentType = "image/gif", width = 400)
+        },
+        deleteFile = TRUE
+      )
+      output$impute_gif_2_plot <- renderImage(
+        {
+          list(src = paste0(dir_name, "/focal_impute_2.gif"), contentType = "image/gif", width = 400)
+        },
+        deleteFile = TRUE
+      )
 
       incProgress(1 / n_step,
         detail = sprintf("Step %d of %d: Rotating scans...", i_step, n_step)
