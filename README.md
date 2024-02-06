@@ -1,13 +1,13 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# wireShiny
+# wireShiny <img src="man/figures/logo.png" align="right" height="139" alt="" />
 
 <!-- badges: start -->
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2024--01--28-yellowgreen.svg)](https://github.com/YuhangTom/wireShiny/commits/main)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2024--02--05-yellowgreen.svg)](https://github.com/YuhangTom/wireShiny/commits/main)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/wireShiny.png)](https://CRAN.R-project.org/package=wireShiny)
 [![R-CMD-check](https://github.com/YuhangTom/wireShiny/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/YuhangTom/wireShiny/actions/workflows/R-CMD-check.yaml)
