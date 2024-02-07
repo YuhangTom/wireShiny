@@ -444,8 +444,8 @@ server <- function(input, output) {
       )
       i_step <- i_step + 1
 
-      shift_sig_1 <- x3p_raw_sig_vec(x3p_bin_shift_1)
-      shift_sig_2 <- x3p_raw_sig_vec(x3p_bin_shift_2)
+      shift_sig_1 <- x3p_raw_sig_df(x3p_bin_shift_1)
+      shift_sig_2 <- x3p_raw_sig_df(x3p_bin_shift_2)
 
       incProgress(1 / n_step,
         detail = sprintf("Step %d of %d: Aligning signals...", i_step, n_step)
