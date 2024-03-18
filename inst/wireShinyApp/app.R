@@ -228,18 +228,18 @@ ui <- dashboardPage(
           )
         )
       ),
-      tabPanel(
-        tabName = "about_tab",
-        h4(HTML("<b>About</b>"))
-      ),
-      tabPanel(
-        tabName = "instructions_tab",
-        h4(HTML("<b>Instructions</b>"))
-      ),
-      tabPanel(
-        tabName = "contact_tab",
-        h4(HTML("<b>Contact</b>"))
-      )
+      # tabPanel(
+      #   tabName = "about_tab",
+      #   h4(HTML("<b>About</b>"))
+      # ),
+      # tabPanel(
+      #   tabName = "instructions_tab",
+      #   h4(HTML("<b>Instructions</b>"))
+      # ),
+      # tabPanel(
+      #   tabName = "contact_tab",
+      #   h4(HTML("<b>Contact</b>"))
+      # )
     ),
     use_pkg_gfont("montserrat", selector = "*"),
     useShinyjs()
