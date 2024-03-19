@@ -4,7 +4,6 @@ library(shinyWidgets) # showNotification
 library(shinydashboard)
 
 library(tidyverse)
-library(plotly)
 library(rgl) # rglwidgetOutput, rglwidget
 library(gfonts) # use_pkg_gfont
 
@@ -117,7 +116,7 @@ ui <- dashboardPage(
               selected = "Signals after aligning",
               tabPanel(
                 "Signals after aligning",
-                plotlyOutput("sig_align_plot")
+                plotOutput("sig_align_plot")
               ),
               tabPanel(
                 "Original x3p images",
@@ -134,11 +133,11 @@ ui <- dashboardPage(
                 fluidRow(
                   column(
                     width = 6,
-                    plotlyOutput("number_of_missing_immediate_neighbors_boxplot_1")
+                    plotOutput("number_of_missing_immediate_neighbors_boxplot_1")
                   ),
                   column(
                     width = 6,
-                    plotlyOutput("number_of_missing_immediate_neighbors_boxplot_2")
+                    plotOutput("number_of_missing_immediate_neighbors_boxplot_2")
                   )
                 )
               ),
@@ -193,21 +192,21 @@ ui <- dashboardPage(
                 fluidRow(
                   column(
                     width = 6,
-                    plotlyOutput("nfline_red_plot_1")
+                    plotOutput("nfline_red_plot_1")
                   ),
                   column(
                     width = 6,
-                    plotlyOutput("nfline_red_plot_2")
+                    plotOutput("nfline_red_plot_2")
                   )
                 ),
                 fluidRow(
                   column(
                     width = 6,
-                    plotlyOutput("MLE_loess_red_plot_1")
+                    plotOutput("MLE_loess_red_plot_1")
                   ),
                   column(
                     width = 6,
-                    plotlyOutput("MLE_loess_red_plot_2")
+                    plotOutput("MLE_loess_red_plot_2")
                   )
                 )
               ),
@@ -382,13 +381,11 @@ server <- function(input, output) {
       insidepoly_df_1 <- x3p_insidepoly_df(x3ps$x3p1, concavity = concavity, b = b, ifplot = TRUE)
       insidepoly_df_2 <- x3p_insidepoly_df(x3ps$x3p2, concavity = concavity, b = b, ifplot = TRUE)
 
-      output$number_of_missing_immediate_neighbors_boxplot_1 <- renderPlotly({
-        attr(insidepoly_df_1, "number_of_missing_immediate_neighbors_boxplot") %>%
-          ggplotly()
+      output$number_of_missing_immediate_neighbors_boxplot_1 <- renderPlot({
+        attr(insidepoly_df_1, "number_of_missing_immediate_neighbors_boxplot")
       })
-      output$number_of_missing_immediate_neighbors_boxplot_2 <- renderPlotly({
-        attr(insidepoly_df_2, "number_of_missing_immediate_neighbors_boxplot") %>%
-          ggplotly()
+      output$number_of_missing_immediate_neighbors_boxplot_2 <- renderPlot({
+        attr(insidepoly_df_2, "number_of_missing_immediate_neighbors_boxplot")
       })
 
       incProgress(1 / n_step,
@@ -474,21 +471,17 @@ server <- function(input, output) {
         rglwidget()
       })
 
-      output$nfline_red_plot_1 <- renderPlotly({
-        attr(x3p_bin_rotate_1, "nfline_red_plot") %>%
-          ggplotly()
+      output$nfline_red_plot_1 <- renderPlot({
+        attr(x3p_bin_rotate_1, "nfline_red_plot")
       })
-      output$MLE_loess_red_plot_1 <- renderPlotly({
-        attr(x3p_bin_rotate_1, "MLE_loess_red_plot") %>%
-          ggplotly()
+      output$MLE_loess_red_plot_1 <- renderPlot({
+        attr(x3p_bin_rotate_1, "MLE_loess_red_plot")
       })
-      output$nfline_red_plot_2 <- renderPlotly({
-        attr(x3p_bin_rotate_2, "nfline_red_plot") %>%
-          ggplotly()
+      output$nfline_red_plot_2 <- renderPlot({
+        attr(x3p_bin_rotate_2, "nfline_red_plot")
       })
-      output$MLE_loess_red_plot_2 <- renderPlotly({
-        attr(x3p_bin_rotate_2, "MLE_loess_red_plot") %>%
-          ggplotly()
+      output$MLE_loess_red_plot_2 <- renderPlot({
+        attr(x3p_bin_rotate_2, "MLE_loess_red_plot")
       })
 
       incProgress(1 / n_step,
@@ -533,9 +526,8 @@ server <- function(input, output) {
         ifplot = TRUE
       )
 
-      output$sig_align_plot <- renderPlotly({
-        attr(aligned, "sig_align_plot") %>%
-          ggplotly()
+      output$sig_align_plot <- renderPlot({
+        attr(aligned, "sig_align_plot")
       })
 
       updateTabsetPanel(inputId = "tabsetPanel", selected = "Signals after aligning")
