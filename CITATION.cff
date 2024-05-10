@@ -13,7 +13,7 @@ abstract: The `wireShiny` package runs the Shiny app based on functionalities of
   provides plots for parameter tunings, and cross-correlation for decision making.
 authors:
 - family-names: Lin
-  given-names: Yuhang
+  given-names: Yuhang (Tom)
   email: yhlin@iastate.edu
   orcid: https://orcid.org/0000-0002-3600-9889
 - family-names: Hofmann
@@ -24,7 +24,7 @@ repository-code: https://github.com/YuhangTom/wireShiny
 url: https://github.com/YuhangTom/wireShiny
 contact:
 - family-names: Lin
-  given-names: Yuhang
+  given-names: Yuhang (Tom)
   email: yhlin@iastate.edu
   orcid: https://orcid.org/0000-0002-3600-9889
 references:
