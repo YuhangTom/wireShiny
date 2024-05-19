@@ -24,7 +24,7 @@ status](https://www.r-pkg.org/badges/version/wireShiny.png)](https://CRAN.R-proj
 <!-- !!!Add with use_github_action!!! [![Codecov test coverage](https://codecov.io/gh/YuhangTom/wireShiny/branch/main/graph/badge.svg)](https://app.codecov.io/gh/YuhangTom/wireShiny?branch=main) -->
 <!-- badges: end -->
 
-The goal of wireShiny is to run the Shiny app based on functionalities of [`wire`](https://yuhangtom.github.io/wire/).
+The goal of wireShiny is to run the Shiny app based on the functionalities of [`wire`](https://yuhangtom.github.io/wire/).
 
 ## Installation
 
