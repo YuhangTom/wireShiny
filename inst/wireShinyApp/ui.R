@@ -33,7 +33,7 @@ ui <- shinyUI({
     tags$div(
       id = "app-container",
       fluidRow(
-        column(width = 4, tags$a(target = "_blank", href = "https://forensicstats.org", tags$img(src = "images/BulletAnalzr-Mark-2.png", width = "500px"))),
+        column(width = 4, tags$a(target = "_blank", href = "https://forensicstats.org", tags$img(src = "images/wireShiny-Mark.png", width = "500px"))),
         column(width = 4, br()),
         column(width = 4, tags$a(target = "_blank", href = "https://forensicstats.org", tags$img(src = "images/BulletAnalyzr-Design-2.png", width = "500px")), align = "right"),
       ),
