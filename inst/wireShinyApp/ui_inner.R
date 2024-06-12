@@ -1,10 +1,6 @@
-library(shinydashboard) #dashboardPage
 library(gfonts) #use_pkg_gfont
 
-dashboardPage(
-  dashboardHeader(title = HTML("<b>wireShiny</b>")),
-  dashboardSidebar(disable = TRUE),
-  dashboardBody(
+fluidPage(
     tags$head(tags$style(HTML("
                                   /* logo */
                                   .skin-blue .main-header .logo {
@@ -228,5 +224,4 @@ dashboardPage(
     ),
     use_pkg_gfont("montserrat", selector = "*"),
     useShinyjs()
-  )
 )
