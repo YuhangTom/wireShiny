@@ -56,7 +56,13 @@ ui <- shinyUI({
             hr()
           ),
           tabPanel("Instructions", ),
-          tabPanel("Contact", ),
+          tabPanel(
+            "Contact",
+            h4(HTML("Yuhang (Tom) Lin: <a href='mailto:yhlin@iastate.edu'>yhlin [at] iastate.edu</a>")),
+            h4(HTML("Heike Hofmann: <a href='mailto:hofmann@iastate.edu'>hofmann [at] iastate.edu</a>")),
+            h4(HTML("CSAFE: <a href='mailto:csafe@iastate.edu'>csafe [at] iastate.edu</a>")),
+            hr()
+          ),
           # tags$li(
           #   class = "dropdown",
           #   tags$img(src = "csafe_tools_blue_h.png", style = "height: 50px; padding-top: 10px; padding-right: 10px;"),
