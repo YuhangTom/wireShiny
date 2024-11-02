@@ -7,7 +7,7 @@ cff-version: 1.2.0
 message: 'To cite package "wireShiny" in publications use:'
 type: software
 license: MIT
-title: 'wireShiny: Run the Shiny App Based on Functionalities of `wire`'
+title: 'wireShiny: R Shiny App Based on Functionalities of `wire`'
 version: 0.0.0.9000
 abstract: The `wireShiny` package runs the Shiny app based on functionalities of `wire`,
   provides plots for parameter tunings, and cross-correlation for decision making.
@@ -37,12 +37,13 @@ references:
   authors:
   - family-names: Ooms
     given-names: Jeroen
-    email: jeroen@berkeley.edu
+    email: jeroenooms@gmail.com
     orcid: https://orcid.org/0000-0002-4035-0289
   - family-names: Hester
     given-names: Jim
     email: james.hester@rstudio.com
   year: '2024'
+  doi: 10.32614/CRAN.package.spelling
 - type: software
   title: magrittr
   abstract: 'magrittr: A Forward-Pipe Operator for R'
@@ -57,6 +58,7 @@ references:
     given-names: Hadley
     email: hadley@rstudio.com
   year: '2024'
+  doi: 10.32614/CRAN.package.magrittr
 - type: software
   title: shiny
   abstract: 'shiny: Web Application Framework for R'
@@ -95,6 +97,7 @@ references:
   - family-names: Borges
     given-names: Barbara
   year: '2024'
+  doi: 10.32614/CRAN.package.shiny
 - type: software
   title: 'R: A Language and Environment for Statistical Computing'
   notes: Depends
