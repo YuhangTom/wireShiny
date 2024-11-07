@@ -39,4 +39,4 @@ run_wireShiny()
 
 A Shiny app like the one below will open in your default browser.
 
-![](inst/wireShiny_screenshot.png)
+![](man/figures/wireShiny_screenshot.png)
